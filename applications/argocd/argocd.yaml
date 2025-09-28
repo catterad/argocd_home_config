@@ -46,3 +46,13 @@ spec:
         jsonPointers:
           - /spec/clusterIP
           - /spec/clusterIPs
+
+      - group: apps
+        kind: Deployment
+        name: argocd-server
+        jsonPointers:
+          - /metadata/annotations
+          - /metadata/generation
+          - /status
+          - /spec/replicas
+
