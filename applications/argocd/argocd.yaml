@@ -30,19 +30,19 @@ spec:
       annotations:
         argocd.argoproj.io/compare-options: IgnoreExtraneous
 
-      ignoreDifferences:
-        - kind: Deployment
-          jsonPointers:
-            - /spec/replicas
-            - /spec/template/metadata/annotations/kubectl.kubernetes.io~1last-applied-configuration
-            - /metadata/annotations/argocd.argoproj.io~1tracking-id
-            - /metadata/annotations/deployment.kubernetes.io~1revision
-            - /metadata/annotations/kubectl.kubernetes.io~1last-applied-configuration
-            - /metadata/annotations/kubernetes.io~1change-cause
-            - /status
-            - /metadata/generation
+  ignoreDifferences:
+      - kind: Deployment
+        jsonPointers:
+          - /spec/replicas
+          - /spec/template/metadata/annotations/kubectl.kubernetes.io~1last-applied-configuration
+          - /metadata/annotations/argocd.argoproj.io~1tracking-id
+          - /metadata/annotations/deployment.kubernetes.io~1revision
+          - /metadata/annotations/kubectl.kubernetes.io~1last-applied-configuration
+          - /metadata/annotations/kubernetes.io~1change-cause
+          - /status
+          - /metadata/generation
 
-        - kind: Service
-          jsonPointers:
-            - /spec/clusterIP
-            - /spec/clusterIPs
+      - kind: Service
+        jsonPointers:
+          - /spec/clusterIP
+          - /spec/clusterIPs
