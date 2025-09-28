@@ -24,3 +24,16 @@ spec:
       # This is crucial for *adopting* existing resources without errors
       - RespectIgnoreDifferences=true
       - ApplyOutOfSyncOnly=true
+    managedNamespaceMetadata:
+      annotations:
+        argocd.argoproj.io/compare-options: IgnoreExtraneous
+
+      ignoreDifferences:
+        - kind: Deployment
+          jsonPointers:
+            - /spec/replicas
+            - /spec/template/metadata/annotations/kubectl.kubernetes.io~1last-applied-configuration
+        - kind: Service
+          jsonPointers:
+            - /spec/clusterIP
+            - /spec/clusterIPs
