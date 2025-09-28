@@ -1,3 +1,4 @@
+```yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -27,25 +28,30 @@ spec:
       annotations:
         argocd.argoproj.io/compare-options: IgnoreExtraneous
 
-ignoreDifferences:
-   - group: apps
-     kind: Deployment
-     name: argocd-server
-     namespace: argocd
-     jsonPointers:
-       # Ignore ArgoCD-injected annotations
-       - /metadata/annotations
-       # Ignore generation drift
-       - /metadata/generation
-       # Ignore runtime-only status
-       - /status
-       # Ignore replica count differences
-       - /spec/replicas
-       # Ignore probe defaults
-       - /spec/template/spec/containers/0/livenessProbe
-       - /spec/template/spec/containers/0/readinessProbe
-       # Ignore protocol defaults on container ports
-       - /spec/template/spec/containers/0/ports
-       # Ignore runtime defaults for volumes
-       - /spec/template/spec/volumes
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      name: argocd-server
+      namespace: argocd
+      jsonPointers:
+        # Ignore K8s-managed metadata
+        - /metadata/annotations
+        - /metadata/generation
+        - /status
+        # Ignore runtime defaults
+        - /spec/replicas
+        - /spec/template/spec/containers/0/livenessProbe
+        - /spec/template/spec/containers/0/readinessProbe
+        - /spec/template/spec/containers/0/ports
+        - /spec/template/spec/containers/0/resources
+        - /spec/template/spec/containers/0/terminationMessagePath
+        - /spec/template/spec/containers/0/terminationMessagePolicy
+        - /spec/template/spec/securityContext
+        - /spec/template/spec/volumes
 
+    - kind: Service
+      namespace: argocd
+      jsonPointers:
+        - /spec/clusterIP
+        - /spec/clusterIPs
+```
