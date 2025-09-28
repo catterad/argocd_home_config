@@ -7,6 +7,8 @@ metadata:
   finalizers:
     # This finalizer ensures all resources are cleaned up if the application is deleted
     - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/refresh: hard
 spec:
   project: default
   source:
