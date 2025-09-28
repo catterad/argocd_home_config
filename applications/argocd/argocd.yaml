@@ -33,6 +33,8 @@ spec:
           jsonPointers:
             - /spec/replicas
             - /spec/template/metadata/annotations/kubectl.kubernetes.io~1last-applied-configuration
+            - /metadata/annotations/argocd.argoproj.io~1tracking-id
+            - /metadata/annotations/deployment.kubernetes.io~1revision
         - kind: Service
           jsonPointers:
             - /spec/clusterIP
