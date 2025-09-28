@@ -1,58 +1,41 @@
-# apps/argocd/argocd.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: argocd-self-managed
   namespace: argocd
   finalizers:
-    # This finalizer ensures all resources are cleaned up if the application is deleted
     - resources-finalizer.argocd.argoproj.io
   annotations:
     argocd.argoproj.io/refresh: hard
 spec:
   project: default
   source:
-    repoURL: https://github.com/catterad/argocd_home_config.git  # <-- CHANGE THIS (e.g., https://github.com/myorg/gitops-repo.git)
+    repoURL: https://github.com/catterad/argocd_home_config.git
     targetRevision: HEAD
-    path: manifests/argocd        # <-- Points to the directory with the Deployment YAMLs
+    path: manifests/argocd
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd             # The namespace where Argo CD components live
+    namespace: argocd
   syncPolicy:
     automated:
-      prune: true                 # Allow Argo CD to delete resources (e.g., if you remove a manifest)
-      selfHeal: true              # Automatically fix any drift from the Git state
+      prune: true
+      selfHeal: true
     syncOptions:
-      # This is crucial for *adopting* existing resources without errors
       - RespectIgnoreDifferences=true
       - ApplyOutOfSyncOnly=true
     managedNamespaceMetadata:
       annotations:
         argocd.argoproj.io/compare-options: IgnoreExtraneous
 
-ignoreDifferences:
-      - kind: Deployment
-        jsonPointers:
-          - /spec/replicas
-          - /spec/template/metadata/annotations/kubectl.kubernetes.io~1last-applied-configuration
-          - /metadata/annotations/argocd.argoproj.io~1tracking-id
-          - /metadata/annotations/deployment.kubernetes.io~1revision
-          - /metadata/annotations/kubectl.kubernetes.io~1last-applied-configuration
-          - /metadata/annotations/kubernetes.io~1change-cause
-          - /status
-          - /metadata/generation
-
-      - kind: Service
-        jsonPointers:
-          - /spec/clusterIP
-          - /spec/clusterIPs
-
-      - group: apps
-        kind: Deployment
-        name: argocd-server
-        jsonPointers:
-          - /metadata/annotations
-          - /metadata/generation
-          - /status
-          - /spec/replicas
-
+  ignoreDifferences:        # <-- moved here, under spec
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas
+        - /metadata/annotations
+        - /metadata/generation
+        - /status
+    - kind: Service
+      jsonPointers:
+        - /spec/clusterIP
+        - /spec/clusterIPs
