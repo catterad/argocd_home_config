@@ -1,0 +1,26 @@
+# apps/argocd/argocd.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-self-managed
+  namespace: argocd
+  finalizers:
+    # This finalizer ensures all resources are cleaned up if the application is deleted
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/catterad/argocd_home_config.git  # <-- CHANGE THIS (e.g., https://github.com/myorg/gitops-repo.git)
+    targetRevision: HEAD
+    path: manifests/argocd        # <-- Points to the directory with the Deployment YAMLs
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd             # The namespace where Argo CD components live
+  syncPolicy:
+    automated:
+      prune: true                 # Allow Argo CD to delete resources (e.g., if you remove a manifest)
+      selfHeal: true              # Automatically fix any drift from the Git state
+    syncOptions:
+      # This is crucial for *adopting* existing resources without errors
+      - RespectIgnoreDifferences=true
+      - ApplyOutOfSyncOnly=true
