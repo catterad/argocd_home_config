@@ -39,12 +39,12 @@ spec:
         - /status
         # Ignore runtime defaults
         - /spec/replicas
-        - /spec/template/spec/containers/0/livenessProbe
-        - /spec/template/spec/containers/0/readinessProbe
-        - /spec/template/spec/containers/0/ports
+        #- /spec/template/spec/containers/0/livenessProbe
+        #- /spec/template/spec/containers/0/readinessProbe
+        #- /spec/template/spec/containers/0/ports
         - /spec/template/spec/containers/0/resources
-        - /spec/template/spec/containers/0/terminationMessagePath
-        - /spec/template/spec/containers/0/terminationMessagePolicy
+        #- /spec/template/spec/containers/0/terminationMessagePath
+        #- /spec/template/spec/containers/0/terminationMessagePolicy
         - /spec/template/spec/securityContext
         - /spec/template/spec/volumes
 
