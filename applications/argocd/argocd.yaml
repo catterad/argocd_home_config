@@ -30,7 +30,7 @@ spec:
       annotations:
         argocd.argoproj.io/compare-options: IgnoreExtraneous
 
-  ignoreDifferences:
+ignoreDifferences:
       - kind: Deployment
         jsonPointers:
           - /spec/replicas
