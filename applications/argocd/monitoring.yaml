@@ -19,6 +19,17 @@ spec:
         repoURL: https://github.com/catterad/helm_home_monitoring.git
         targetRevision: main
         path: '{{path}}'
+        helm:
+          releaseName: '{{path.basename}}'
+          values: |
+            replicaCount: 1
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 200m
+                memory: 256Mi
       destination:
         server: https://kubernetes.default.svc
         namespace: monitoring
