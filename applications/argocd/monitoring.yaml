@@ -21,15 +21,8 @@ spec:
         path: '{{path}}'
         helm:
           releaseName: '{{path.basename}}'
-          values: |
-            replicaCount: 1
-            resources:
-              requests:
-                cpu: 100m
-                memory: 128Mi
-              limits:
-                cpu: 200m
-                memory: 256Mi
+          valueFiles:
+            - values.yaml     # automatically picks up values.yaml from each /chart/app-name/
       destination:
         server: https://kubernetes.default.svc
         namespace: monitoring
