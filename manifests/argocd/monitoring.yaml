@@ -14,7 +14,7 @@ spec:
     metadata:
       name: '{{path.basename}}'
     spec:
-      project: monitoring
+      project: default
       source:
         repoURL: https://github.com/catterad/helm_home_monitoring.git
         targetRevision: main
