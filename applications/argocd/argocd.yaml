@@ -21,7 +21,7 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - RespectIgnoreDifferences=true
+      #- RespectIgnoreDifferences=true
       - ApplyOutOfSyncOnly=true
     managedNamespaceMetadata:
       annotations:
