@@ -27,18 +27,18 @@ spec:
       annotations:
         argocd.argoproj.io/compare-options: IgnoreExtraneous
 
-  ignoreDifferences:
-    - group: apps
-      kind: Deployment
-      name: argocd-server
-      namespace: argocd
-      jsonPointers:
+  #ignoreDifferences:
+  #  - group: apps
+  #    kind: Deployment
+  #    name: argocd-server
+  #    namespace: argocd
+  #    jsonPointers:
         # Ignore K8s-managed metadata
-        - /metadata/annotations
-        - /metadata/generation
-        - /status
+        #- /metadata/annotations
+        #- /metadata/generation
+        #- /status
         # Ignore runtime defaults
-        - /spec/replicas
+        #- /spec/replicas
         #- /spec/template/spec/containers/0/livenessProbe
         #- /spec/template/spec/containers/0/readinessProbe
         #- /spec/template/spec/containers/0/ports
@@ -48,8 +48,8 @@ spec:
         #- /spec/template/spec/securityContext
         #- /spec/template/spec/volumes
 
-    - kind: Service
-      namespace: argocd
-      jsonPointers:
-        - /spec/clusterIP
-        - /spec/clusterIPs
+  #  - kind: Service
+  #    namespace: argocd
+  #    jsonPointers:
+  #      - /spec/clusterIP
+  #      - /spec/clusterIPs
